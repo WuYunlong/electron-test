@@ -1,3 +1,3 @@
 export * from './is'
-export * from './electronApp'
+export * from './electron-app'
 export * from './optimizer'
