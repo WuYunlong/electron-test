@@ -1,12 +1,14 @@
 import { app, shell, BrowserWindow } from 'electron'
 import * as path from 'path'
-import { electronApp, optimizer, is } from './utils'
+import { electronApp, optimizer, is } from './_utils'
 
 if (is.dev) {
   process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 }
 
 function createWindow(): void {
+  console.log(app.getPath('home'))
+
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,

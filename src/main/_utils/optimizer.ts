@@ -10,7 +10,9 @@ export const optimizer = {
     if (!window) {
       return
     }
+
     const { webContents } = window
+
     webContents.on('before-input-event', (event: Event, input: Input) => {
       if (input.type === 'keyDown') {
         if (!is.dev) {
