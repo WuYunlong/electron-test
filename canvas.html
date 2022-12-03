@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .canvas-wrap {
+        width: 200px;
+        height: 200px;
+        position: relative;
+        margin: 100px auto;
+      }
+      .canvas-wrap #canvas {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        z-index: 0;
+      }
+      .process {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        color: #fff;
+      }
+      .process-inner {
+        display: inline-block;
+      }
+      .process-inner span {
+        display: block;
+        text-align: center;
+        font-size: 16px;
+        line-height: 1.5;
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="canvas-wrap">
+      <canvas id="canvas"></canvas>
+      <div class="process">
+        <div class="process-inner">
+          <span class="name">开始学习</span>
+          <span class="scale">30%</span>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.onload = function () {
+        var canvas = document.getElementById('canvas')
+        var div = canvas.parentNode
+        var width = div.clientHeight
+        var height = div.clientHeight
+
+        let size = width
+
+        var ctx = canvas.getContext('2d')
+
+        canvas.width = size * 2
+        canvas.height = size * 2
+
+        ctx.translate(size, size)
+
+        ctx.beginPath()
+        ctx.fillStyle = '#FEE9EB'
+        ctx.arc(0, 0, size - 10, 0, 2 * Math.PI)
+        ctx.fill()
+
+        for (var i = 0; i < 50; i++) {
+          ctx.rotate((7.2 * Math.PI) / 180)
+          ctx.beginPath()
+          ctx.strokeStyle = '#FFD7DA'
+          ctx.lineWidth = 2
+          ctx.moveTo(0, 0)
+          ctx.lineTo(size - 10, 0)
+          ctx.stroke()
+        }
+
+        ctx.translate(-size, -size)
+
+        clearArcFun(size, size, size - 30, ctx)
+
+        const grd = ctx.createRadialGradient(size, size, 0, size, size, size - 60)
+        grd.addColorStop(0, '#FE252B')
+        grd.addColorStop(1, '#FD7877')
+
+        ctx.beginPath()
+        ctx.fillStyle = grd
+        ctx.arc(size, size, size - 60, 0, 2 * Math.PI)
+        ctx.fill()
+
+        drawerProcess(30, size, ctx)
+      }
+
+      function drawerProcess(number, size, ctx) {
+        var end = 3.6 * number - 90
+
+        ctx.beginPath()
+        ctx.lineWidth = 20
+        ctx.strokeStyle = '#FD7877'
+        ctx.lineCap = 'round'
+        ctx.arc(size, size, size - 20, (-90 * Math.PI) / 180, (end * Math.PI) / 180, false)
+        ctx.stroke()
+      }
+
+      function clearArcFun(x, y, r, cxt) {
+        var stepClear = 1
+        clearArc(x, y, r)
+        function clearArc(x, y, radius) {
+          var calcWidth = radius - stepClear
+          var calcHeight = Math.sqrt(radius * radius - calcWidth * calcWidth)
+          var posX = x - calcWidth
+          var posY = y - calcHeight
+
+          var widthX = 2 * calcWidth
+          var heightY = 2 * calcHeight
+
+          if (stepClear <= radius) {
+            cxt.clearRect(posX, posY, widthX, heightY)
+            stepClear += 1
+            clearArc(x, y, radius)
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

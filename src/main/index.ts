@@ -1,13 +1,15 @@
 import { app, shell, BrowserWindow } from 'electron'
-import * as path from 'path'
+import path from 'path'
 import { electronApp, optimizer, is } from './_utils'
+import { extensionList } from './extension'
+import { ipcListener } from './ipc'
 
 if (is.dev) {
   process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 }
 
-function createWindow(): void {
-  console.log(app.getPath('home'))
+const createWindow = async (): Promise<void> => {
+  extensionList()
 
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -19,6 +21,7 @@ function createWindow(): void {
     backgroundColor: is.macos ? 'rgba(0, 0, 0, 0)' : 'rgb(246, 246, 246)',
     trafficLightPosition: { x: 18, y: 18 },
     autoHideMenuBar: true,
+    title: '',
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.js'),
       sandbox: false
@@ -49,6 +52,8 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
   }
+
+  ipcListener()
 }
 
 app.whenReady().then(() => {

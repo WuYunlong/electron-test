@@ -1,0 +1,26 @@
+{
+  "name": "theme-defaults",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "WuYunlong<Mr.WuYunlong@gmail.com>",
+  "license": "MIT",
+  "extension": {
+    "themes": [
+      {
+        "id": "dark",
+        "label": "Dark",
+        "path": "./themes/dark.json"
+      },
+      {
+        "id": "light",
+        "label": "Light",
+        "path": "./themes/light.json"
+      }
+    ]
+  }
+}

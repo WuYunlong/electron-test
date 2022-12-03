@@ -5,9 +5,11 @@ directories:
 files:
   - '!**/.vscode/*'
   - '!src/*'
+  - '!config/*'
   - '!electron.vite.config.{js,ts,mjs,cjs}'
   - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
   - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+  - '!{.eslintrc.yml,.npmrc,LICENSE,pnpm-lock.yaml}'
 asarUnpack:
   - '**/*.{node,dll}'
 # afterSign: build/notarize.js

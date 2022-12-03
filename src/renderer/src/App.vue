@@ -1,23 +1,16 @@
 <template>
-  <div class="app" @mousedown="onMouseDown">
-    <div style="padding: 100px">
-      <button @click="menuClicked">点击</button>
-    </div>
+  <div style="padding: 100px; display: flex; gap: 10px">
+    <button @click="menuClicked">菜单</button>
+    <button @click="light">白色</button>
+    <button @click="dark">黑色</button>
   </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { ContextMenu } from './components/context-menu'
 import { MenuItem } from './components/context-menu/interface'
-
-const onMouseDown = (e: MouseEvent): void => {
-  e.stopPropagation()
-
-  const el = e.target as HTMLElement
-  if (el.classList.contains('app')) {
-    console.log(`appMouseDown`)
-  }
-}
+import { theme } from './_utils'
 
 const menuList: MenuItem[] = [
   {
@@ -127,13 +120,32 @@ const menuClicked = (): void => {
   console.log(`menuClicked`)
   ContextMenu(menuList)
 }
+
+const light = () => {
+  theme('我的白色')
+}
+
+const dark = () => {
+  theme('我的黑色')
+}
+
+onMounted(() => {
+  theme('我的白色')
+})
 </script>
 
-<style scoped lang="scss">
-.app {
+<style lang="scss">
+#app {
   width: 100vw;
   height: 100vh;
-  background: rgba(246, 246, 246, 0.75);
+  background: var(--var-main-bg);
   position: relative;
+  transition: background 0.3s;
+}
+
+button {
+  user-select: none;
+  -webkit-app-region: no-drag;
+  border: 0;
 }
 </style>
