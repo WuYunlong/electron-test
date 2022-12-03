@@ -16,11 +16,16 @@ jobs:
       - name: 检出代码
         uses: actions/checkout@v3
 
-      - name: 安装 NodeJS
-        uses: actions/setup-node@v3
-
       - name: 安装 PNPM
-        uses: pnpm/action-setup@v2.2.2
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.17.1
+
+      - name: 安装 Node ${{ matrix.node }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'pnpm'
 
       - name: 安装依赖
         run: pnpm install --frozen-lockfile
