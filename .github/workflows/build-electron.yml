@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2019, macos-10.15, ubuntu-18.04]
+        os: [macos-latest, windows-latest, ubuntu-latest]
     steps:
       - name: 检出代码
         uses: actions/checkout@v3
@@ -31,30 +31,30 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Windows 编译
-        if: matrix.os == 'windows-2019'
+        if: matrix.os == 'windows-latest'
         run: pnpm build:win
 
       - name: Mac 编译
-        if: matrix.os == 'macos-10.15'
+        if: matrix.os == 'macos-latest'
         run: pnpm run build:mac
 
       - name: Linux 编译
-        if: matrix.os == 'ubuntu-18.04'
+        if: matrix.os == 'ubuntu-latest'
         run: pnpm run build:linux
 
       - name: 创建目录
         run: mkdir artifacts
 
       - name: 清理 Windows
-        if: matrix.os == 'windows-2019'
+        if: matrix.os == 'windows-latest'
         run: mv dist/*.exe artifacts || true
 
       - name: 清理 Macos
-        if: matrix.os == 'macos-10.15'
+        if: matrix.os == 'macos-latest'
         run: mv dist/*.dmg artifacts || true
 
       - name: 清理 Linux
-        if: matrix.os == 'ubuntu-18.04'
+        if: matrix.os == 'ubuntu-latest'
         run: |
           mv dist/*.snap artifacts || true
           mv dist/*.AppImage artifacts || true
